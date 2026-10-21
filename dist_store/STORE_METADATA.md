@@ -11,11 +11,12 @@
 - **Возрастной рейтинг:** 6+ (или 0+ для всей семьи)
 - **Реклама:** **НЕТ** (Отметить «В приложении нет рекламы»)
 - **Целевая аудитория:** Дети, подростки, родители (программа «Для всей семьи» / Families Policy)
-- **E-mail разработчика:** `teardbro@gmail.com`
+- **E-mail разработчика:** `newmax9549@gmail.com`
 - **Разработчик / Правообладатель:** Максим Кондратенко (ИНН: `790105019608`)
+- **Google Play Developer Account ID:** `7811878099806521541`
 - **Политика конфиденциальности:** 
-  - Локальный HTML-файл: [`dist_store/privacy_policy.html`](file:///c:/Frontend/animals/dist_store/privacy_policy.html)
-  - Рекомендуемый URL для сторов: публикация в 1 клик на [Telegra.ph](https://telegra.ph) (как в проекте «Сказки Kids») либо на `https://api.skazkikids.ru/animals/privacy.html`
+  - Боевой URL: [https://telegra.ph/Politika-konfidencialnosti--Istorii-prirody-10-21](https://telegra.ph/Politika-konfidencialnosti--Istorii-prirody-10-21)
+  - Резервный HTML-файл: [`dist_store/privacy_policy.html`](file:///c:/Frontend/animals/dist_store/privacy_policy.html)
 
 ---
 
@@ -90,8 +91,8 @@
 | :--- | :--- | :--- | :--- |
 | **Иконка приложения** | `dist_store/store_icon_512.png` | 512 × 512 px | PNG 32-bit без альфа-канала на пергаментном фоне |
 | **Прозрачный логотип** | `dist_store/icon_badge_transparent.png` | 917 × 917 px | PNG с прозрачностью (для баннеров и промо) |
-| **Баннер для Google Play** | Рекомендуется подготовить | 1024 × 500 px | JPG или PNG (баннер для витрины Google Play) |
-| **Скриншоты** | Делаются из приложения | 1080 × 1920 (или 16:9) | 3–8 скриншотов экрана каталога и ридера |
+| **Баннер для Google Play** | `dist_store/feature_graphic_1024x500.png` | 1024 × 500 px | Готовый баннер витрины Google Play (без эмодзи) |
+| **Скриншоты смартфона** | `dist_store/screenshots/` (4 шт.) | 1080 × 1920 px | Сгенерированы через `scripts/generate_screenshots.py` |
 
 ---
 

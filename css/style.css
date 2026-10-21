@@ -125,7 +125,10 @@ html, body {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 10px 14px 14px;
+  padding-top: calc(10px + env(safe-area-inset-top, 0px));
+  padding-right: calc(14px + env(safe-area-inset-right, 0px));
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(14px + env(safe-area-inset-left, 0px));
   gap: 10px;
   position: relative;
 }
