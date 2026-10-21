@@ -1,0 +1,1106 @@
+/* css/style.css */
+/* Стили интерактивных рассказов о животных: 3 темы (Лесная книга, Светлая, Тёмная) */
+
+@font-face {
+  font-family: 'Comfortaa';
+  src: url('../assets/fonts/Comfortaa-Variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/Nunito-Variable.woff2') format('woff2');
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+/* ==========================================================================
+   1. ТЕМЫ ОФОРМЛЕНИЯ
+   ========================================================================== */
+
+/* ТЕМА 1: «Уютная лесная книга» (Тёплый натуральный пергаментно-хвойный стиль) — ПО УМОЛЧАНИЮ */
+:root,
+html[data-theme="forest"] {
+  --bg-page: #EAE0D0;
+  --bg-gradient: linear-gradient(180deg, #EFE7DA 0%, #E2D5C1 100%);
+  --bg-card: #FAF6EE;
+  --bg-reader-text: #FDFBF7;
+  --bg-header: rgba(250, 246, 238, 0.92);
+  --text-main: #2C221E;
+  --text-secondary: #5C4D42;
+  --text-muted: #8C7A6B;
+  --border-color: #D5C5B0;
+  --border-strong: #B8A389;
+  --accent-primary: #2D5A3C;
+  --accent-primary-hover: #22462E;
+  --accent-secondary: #C87D32;
+  --accent-badge-bg: #E6EFE9;
+  --accent-badge-text: #234B30;
+  --progress-track: #DED2C0;
+  --progress-fill: linear-gradient(90deg, #2D5A3C 0%, #48825B 100%);
+  --shadow-soft: 0 8px 24px rgba(58, 42, 28, 0.08);
+  --shadow-card: 0 6px 18px rgba(58, 42, 28, 0.10);
+  --scrollbar-thumb: #C5B49E;
+  --scrollbar-track: #F2ECE1;
+  --paywall-overlay: linear-gradient(180deg, rgba(253, 251, 247, 0.2) 0%, rgba(253, 251, 247, 0.96) 32%, #FDFBF7 100%);
+}
+
+/* ТЕМА 2: «Светлая» (Чистый дневной минимализм) */
+html[data-theme="light"] {
+  --bg-page: #F1F5F9;
+  --bg-gradient: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%);
+  --bg-card: #FFFFFF;
+  --bg-reader-text: #FFFFFF;
+  --bg-header: rgba(255, 255, 255, 0.92);
+  --text-main: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --border-color: #CBD5E1;
+  --border-strong: #94A3B8;
+  --accent-primary: #0F766E;
+  --accent-primary-hover: #115E59;
+  --accent-secondary: #D97706;
+  --accent-badge-bg: #CCFBF1;
+  --accent-badge-text: #115E59;
+  --progress-track: #E2E8F0;
+  --progress-fill: linear-gradient(90deg, #0F766E 0%, #14B8A6 100%);
+  --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 6px 18px rgba(15, 23, 42, 0.08);
+  --scrollbar-thumb: #CBD5E1;
+  --scrollbar-track: #F8FAFC;
+  --paywall-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.96) 32%, #FFFFFF 100%);
+}
+
+/* ТЕМА 3: «Тёмная» (Ночной режим для вечернего чтения) */
+html[data-theme="dark"] {
+  --bg-page: #0F171E;
+  --bg-gradient: linear-gradient(180deg, #131D26 0%, #0B1117 100%);
+  --bg-card: #1A2632;
+  --bg-reader-text: #16202A;
+  --bg-header: rgba(26, 38, 50, 0.92);
+  --text-main: #E6EDF3;
+  --text-secondary: #9FB1C1;
+  --text-muted: #6E8294;
+  --border-color: #2A3B4C;
+  --border-strong: #3B5166;
+  --accent-primary: #38A169;
+  --accent-primary-hover: #2F855A;
+  --accent-secondary: #E09F3E;
+  --accent-badge-bg: rgba(56, 161, 105, 0.18);
+  --accent-badge-text: #68D391;
+  --progress-track: #253545;
+  --progress-fill: linear-gradient(90deg, #38A169 0%, #68D391 100%);
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --scrollbar-thumb: #3B5166;
+  --scrollbar-track: #131C24;
+  --paywall-overlay: linear-gradient(180deg, rgba(22, 32, 42, 0.2) 0%, rgba(22, 32, 42, 0.96) 32%, #16202A 100%);
+}
+
+/* ==========================================================================
+   2. БАЗОВЫЕ СТИЛИ И КОНТЕЙНЕР
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+#app-container {
+  max-width: 680px;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px 14px;
+  gap: 10px;
+  position: relative;
+}
+
+/* ==========================================================================
+   3. ШАПКА (HEADER BAR) И ПОЛОСА ПРОГРЕССА
+   ========================================================================== */
+
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--bg-header);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid var(--border-color);
+  border-radius: 18px;
+  padding: 8px 12px;
+  box-shadow: var(--shadow-soft);
+  flex-shrink: 0;
+}
+
+.header-title-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.header-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-page-counter {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Полоса прочитанного и оставшегося текста */
+.reading-progress-bar {
+  width: 100%;
+  height: 7px;
+  background: var(--progress-track);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  background: var(--progress-fill);
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-icon:hover {
+  border-color: var(--border-strong);
+}
+
+.btn-icon:active {
+  transform: scale(0.94);
+}
+
+.btn-icon.muted {
+  opacity: 0.65;
+}
+
+/* ==========================================================================
+   4. ГЛАВНЫЙ ЭКРАН И ЭКРАН СБОРНИКА
+   ========================================================================== */
+
+.screen-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.screen-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+.screen-scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+.screen-scrollable::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+}
+
+.hero-banner {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 22px;
+  padding: 20px 18px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-banner-illustration {
+  width: 100%;
+  max-height: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.hero-banner-illustration svg,
+.hero-banner-illustration img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-banner-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.hero-banner-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.hero-banner-desc {
+  font-size: 0.96rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 520px;
+}
+
+/* Карточка Сборника №1 на главной */
+.collection-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-strong);
+  border-radius: 22px;
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-2px);
+}
+
+.collection-card:active {
+  transform: scale(0.99);
+}
+
+.collection-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.collection-badge-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background: var(--accent-badge-bg);
+  border: 1.5px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.collection-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.collection-card-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 3px;
+}
+
+.collection-card-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.collection-card-sub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.btn-primary-action {
+  width: 100%;
+  padding: 13px 18px;
+  border-radius: 14px;
+  border: none;
+  background: var(--accent-primary);
+  color: #FFFFFF;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-primary-action:hover {
+  background: var(--accent-primary-hover);
+}
+
+.btn-primary-action:active {
+  transform: scale(0.98);
+}
+
+/* Список рассказов внутри сборника */
+.stories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 12px;
+}
+
+.story-item-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 18px;
+  padding: 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.story-item-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.story-item-thumb {
+  width: 82px;
+  height: 82px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+  background: var(--bg-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.story-item-thumb svg,
+.story-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Закрытая карточка рассказа и анимация отклика на нажатие (как в kids-story-quest_1) */
+.story-item-card--locked {
+  opacity: 0.9;
+}
+
+.story-item-card--locked .story-item-thumb img {
+  filter: saturate(0.75) brightness(0.92);
+}
+
+.story-item-card--locked:active {
+  transform: scale(0.97) !important;
+  transition: transform 0.06s ease-out !important;
+}
+
+.story-item-thumb-lock {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 30, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  backdrop-filter: blur(1.5px);
+}
+
+@keyframes lockedCardShake {
+  0%, 100% { transform: translateX(0) scale(1); }
+  20% { transform: translateX(-5px) rotate(-0.8deg) scale(0.985); }
+  45% { transform: translateX(5px) rotate(0.8deg) scale(0.985); }
+  70% { transform: translateX(-3px) rotate(-0.4deg) scale(0.99); }
+  85% { transform: translateX(2px) scale(0.995); }
+}
+
+.story-item-card--shaking {
+  animation: lockedCardShake 0.38s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Верхний блок покупки всего сборника на экране списка историй (как sets-promo-pill в kids-story-quest_1) */
+.collection-promo-header {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
+  border-radius: 18px;
+  padding: 14px 16px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.collection-promo-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+}
+
+.collection-promo-subtitle {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.collection-promo-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--accent-secondary);
+  background: var(--bg-reader-text);
+  box-shadow: 0 4px 14px rgba(200, 125, 50, 0.18);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-top: 2px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.collection-promo-pill:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(200, 125, 50, 0.28);
+}
+
+.collection-promo-pill:active {
+  transform: scale(0.95);
+}
+
+.collection-promo-pill .promo-old-price {
+  text-decoration: line-through;
+  opacity: 0.55;
+  font-weight: 700;
+}
+
+.collection-promo-pill .promo-new-price {
+  color: var(--accent-primary);
+  font-weight: 900;
+}
+
+.collection-promo-pill .promo-buy-word {
+  background: var(--accent-primary);
+  color: #FFFFFF;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+}
+
+.story-item-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.story-item-author {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.story-item-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.story-item-desc {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.story-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+}
+
+.meta-pill.locked {
+  background: rgba(200, 125, 50, 0.14);
+  color: var(--accent-secondary);
+}
+
+/* ==========================================================================
+   5. ЭКРАН ЧТЕНИЯ РАССКАЗА (РИДЕР)
+   Вверху картинка, фиксированное окно текста с внутренним скроллом,
+   внизу 2 кнопки пролистывания страниц Вперёд и Назад
+   ========================================================================== */
+
+.reader-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Верхний блок: Картинка / Карусель кадров с плавным наплывом (Crossfade) */
+.reader-illustration-box {
+  height: 35%;
+  min-height: 170px;
+  max-height: 260px;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.reader-slides-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.reader-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.15s ease-in-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.reader-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.reader-illustration-box svg,
+.reader-illustration-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.reader-chapter-tag {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  z-index: 3;
+  background: rgba(15, 23, 30, 0.72);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.reader-slide-dots {
+  position: absolute;
+  bottom: 11px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 30, 0.65);
+  backdrop-filter: blur(6px);
+  padding: 5px 9px;
+  border-radius: 999px;
+}
+
+.reader-slide-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.reader-slide-dot.active {
+  background: #FFFFFF;
+  transform: scale(1.28);
+}
+
+.reader-audio-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  background: rgba(15, 23, 30, 0.75);
+  backdrop-filter: blur(6px);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Средний блок: Фиксированное окно текста с внутренним скроллом */
+.reader-text-window {
+  flex: 1;
+  min-height: 0;
+  background: var(--bg-reader-text);
+  border: 1.5px solid var(--border-color);
+  border-radius: 20px;
+  padding: 18px 18px;
+  box-shadow: var(--shadow-card);
+  overflow-y: auto;
+  position: relative;
+  line-height: 1.68;
+  font-size: 1.08rem;
+  color: var(--text-main);
+}
+
+.reader-text-window::-webkit-scrollbar {
+  width: 7px;
+}
+.reader-text-window::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 999px;
+  margin: 8px 0;
+}
+.reader-text-window::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+}
+
+.reader-page-heading {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+  margin-bottom: 10px;
+}
+
+.reader-paragraph {
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.reader-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* Встроенный блок оплаты (Paywall на самом интересном месте) */
+.reader-paywall-teaser {
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.55;
+  margin-top: 8px;
+}
+
+.reader-inline-paywall {
+  margin-top: 12px;
+  padding: 18px 16px;
+  border-radius: 18px;
+  background: var(--bg-card);
+  border: 2px solid var(--accent-secondary);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.reader-inline-paywall-badge {
+  background: rgba(200, 125, 50, 0.16);
+  color: var(--accent-secondary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.reader-inline-paywall-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.reader-inline-paywall-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.btn-unlock-inline {
+  width: 100%;
+  max-width: 340px;
+  padding: 13px 18px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+  color: #FFFFFF;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 0.96rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(180, 83, 9, 0.28);
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.btn-unlock-inline:active {
+  transform: scale(0.97);
+}
+
+/* Нижний блок: Две кнопки пролистывания страниц Вперёд и Назад */
+.reader-nav-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btn-page-nav {
+  padding: 13px 16px;
+  border-radius: 16px;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 0.96rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-soft);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+}
+
+.btn-page-nav:hover:not(:disabled) {
+  border-color: var(--border-strong);
+}
+
+.btn-page-nav:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-page-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-page-nav.btn-next {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #FFFFFF;
+}
+
+.btn-page-nav.btn-next:hover:not(:disabled) {
+  background: var(--accent-primary-hover);
+}
+
+/* ==========================================================================
+   6. МОДАЛЬНЫЕ ОКНА (ОПЛАТА И ВОССТАНОВЛЕНИЕ ПОКУПОК)
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 22, 0.68);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 450px;
+  max-height: 92dvh;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 2px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 22px 20px 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  position: relative;
+  text-align: center;
+  color: var(--text-main);
+  scrollbar-width: none;
+}
+
+.modal-card::-webkit-scrollbar {
+  display: none;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-page);
+  color: var(--text-main);
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.modal-close-btn:hover {
+  transform: scale(1.08);
+}
+
+.modal-close-btn:active {
+  transform: scale(0.92);
+}
+
+.paywall-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.paywall-header-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+
+.paywall-header-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.paywall-benefits-box {
+  background: var(--bg-page);
+  border: 1.5px solid var(--border-color);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.paywall-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.paywall-benefit-icon {
+  color: var(--accent-primary);
+  font-weight: 900;
+  font-size: 0.92rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.paywall-tariff-card {
+  background: var(--bg-reader-text);
+  border: 1.5px solid var(--border-color);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+.paywall-price {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+  margin: 3px 0;
+}
+
+/* Плашка выбора темы */
+.theme-pill-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.theme-chip {
+  padding: 6px 11px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.theme-chip.active {
+  border-color: var(--accent-primary);
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+}
+
+/* Всплывающее уведомление (Toast) */
+.app-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: rgba(15, 23, 30, 0.92);
+  color: #FFFFFF;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  text-align: center;
+  max-width: 90vw;
+}
+
+.app-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+

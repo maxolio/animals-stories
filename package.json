@@ -1,0 +1,32 @@
+{
+  "name": "animals-interactive-stories",
+  "version": "1.0.0",
+  "description": "Интерактивные рассказы о животных и дикой природе «Истории природы»",
+  "author": "Maksim Kondratenko <teardbro@gmail.com>",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --no-browser --ignore=node_modules",
+    "live": "live-server --port=3000 --ignore=node_modules",
+    "start": "serve -s . -l 3000",
+    "sync": "node scripts/sync.mjs",
+    "icons": "python scripts/generate_icons.py",
+    "audio:process": "python scripts/process_audio.py",
+    "pack:cloud": "python scripts/pack_collection.py",
+    "build:apk": "cd android && .\\gradlew assembleRelease",
+    "build:aab": "cd android && .\\gradlew bundleRelease"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "live-server": "^1.2.2",
+    "serve": "^14.2.4"
+  },
+  "dependencies": {
+    "@capacitor-community/keep-awake": "^8.0.1",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/filesystem": "^8.1.4",
+    "@capacitor/haptics": "^8.0.2",
+    "@capgo/capacitor-zip": "^8.1.20"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "appId": "ru.animals.stories",
+  "appName": "Истории природы",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true,
+    "backgroundColor": "#EAE0D0"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "launchShowDuration": 1500,
+      "backgroundColor": "#EAE0D0"
+    },
+    "StatusBar": {
+      "backgroundColor": "#EAE0D0"
+    }
+  }
+}
