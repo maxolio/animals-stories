@@ -19,7 +19,7 @@
    1. ТЕМЫ ОФОРМЛЕНИЯ
    ========================================================================== */
 
-/* ТЕМА 1: «Уютная лесная книга» (Тёплый натуральный пергаментно-хвойный стиль) — ПО УМОЛЧАНИЮ */
+/* ТЕМА 1: «Уютная лесная книга» (Типографика «Хвойный фолиант») — ПО УМОЛЧАНИЮ */
 :root,
 html[data-theme="forest"] {
   --bg-page: #EAE0D0;
@@ -28,15 +28,19 @@ html[data-theme="forest"] {
   --bg-reader-text: #FDFBF7;
   --bg-header: rgba(250, 246, 238, 0.92);
   --text-main: #2C221E;
-  --text-secondary: #5C4D42;
-  --text-muted: #8C7A6B;
+  --text-title: #1B3D2F;          /* благородный глубокий хвойный */
+  --text-author: #543D2B;         /* тёплый печёный каштан */
+  --text-secondary: #6B5745;      /* ореховый оттенок описаний */
+  --text-muted: #8C7764;          /* песочный нейтрал */
   --border-color: #D5C5B0;
   --border-strong: #B8A389;
   --accent-primary: #2D5A3C;
   --accent-primary-hover: #22462E;
   --accent-secondary: #C87D32;
-  --accent-badge-bg: #E6EFE9;
-  --accent-badge-text: #234B30;
+  --accent-badge-bg: #E4EDE7;
+  --accent-badge-text: #1B3D2F;
+  --hero-badge-bg: #2D5A3C;
+  --hero-badge-text: #FFFFFF;
   --progress-track: #DED2C0;
   --progress-fill: linear-gradient(90deg, #2D5A3C 0%, #48825B 100%);
   --shadow-soft: 0 8px 24px rgba(58, 42, 28, 0.08);
@@ -44,35 +48,55 @@ html[data-theme="forest"] {
   --scrollbar-thumb: #C5B49E;
   --scrollbar-track: #F2ECE1;
   --paywall-overlay: linear-gradient(180deg, rgba(253, 251, 247, 0.2) 0%, rgba(253, 251, 247, 0.96) 32%, #FDFBF7 100%);
+  
+  /* Цвета скаутских нашивок: Палитра «Йеллоустоун и Дикий Запад» */
+  --badge-olive: #7F9132;
+  --badge-amber: #E08E28;
+  --badge-slate: #30373B;
+  --badge-teal: #3F9295;
+  --badge-red: #D94B3D;
+  --badge-gold: #EBB036;
 }
 
-/* ТЕМА 2: «Светлая» (Чистый дневной минимализм) */
+/* ТЕМА 2: «Светлая» (Типографика «Тёплый фарфор и орех») */
 html[data-theme="light"] {
-  --bg-page: #F1F5F9;
-  --bg-gradient: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%);
+  --bg-page: #F8F6F2;
+  --bg-gradient: linear-gradient(180deg, #FBF9F6 0%, #F3EFE8 100%);
   --bg-card: #FFFFFF;
   --bg-reader-text: #FFFFFF;
-  --bg-header: rgba(255, 255, 255, 0.92);
-  --text-main: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
-  --border-color: #CBD5E1;
-  --border-strong: #94A3B8;
-  --accent-primary: #0F766E;
-  --accent-primary-hover: #115E59;
-  --accent-secondary: #D97706;
-  --accent-badge-bg: #CCFBF1;
-  --accent-badge-text: #115E59;
-  --progress-track: #E2E8F0;
-  --progress-fill: linear-gradient(90deg, #0F766E 0%, #14B8A6 100%);
-  --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
-  --shadow-card: 0 6px 18px rgba(15, 23, 42, 0.08);
-  --scrollbar-thumb: #CBD5E1;
-  --scrollbar-track: #F8FAFC;
+  --bg-header: rgba(255, 255, 255, 0.94);
+  --text-main: #231E1B;
+  --text-title: #2D2622;          /* глубокий мокко-графит */
+  --text-author: #5C4F45;         /* печёный орех */
+  --text-secondary: #7A6D62;      /* тёплый песочный сланец */
+  --text-muted: #A3968A;          /* мягкий бежевый нейтрал */
+  --border-color: #EAE2D8;
+  --border-strong: #D5C8BA;
+  --accent-primary: #4A3F35;      /* благородный кофейный графит */
+  --accent-primary-hover: #352C24;
+  --accent-secondary: #B57833;
+  --accent-badge-bg: #F5EFE6;      /* нежный крем-фарфор */
+  --accent-badge-text: #4A3F35;
+  --hero-badge-bg: #4A3F35;
+  --hero-badge-text: #FFFFFF;
+  --progress-track: #EFE8DE;
+  --progress-fill: linear-gradient(90deg, #4A3F35 0%, #7A6D62 100%);
+  --shadow-soft: 0 8px 24px rgba(45, 38, 34, 0.05);
+  --shadow-card: 0 6px 18px rgba(45, 38, 34, 0.07);
+  --scrollbar-thumb: #D5C8BA;
+  --scrollbar-track: #F8F6F2;
   --paywall-overlay: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.96) 32%, #FFFFFF 100%);
+
+  /* Цвета скаутских нашивок: Палитра «Тёплый фарфор и орех» */
+  --badge-olive: #5D7A68;
+  --badge-amber: #B57833;
+  --badge-slate: #4E4640;
+  --badge-teal: #44697D;
+  --badge-red: #A3473B;
+  --badge-gold: #B57833;
 }
 
-/* ТЕМА 3: «Тёмная» (Ночной режим для вечернего чтения) */
+/* ТЕМА 3: «Тёмная» (Типографика «Тёплая слоновая кость») */
 html[data-theme="dark"] {
   --bg-page: #0F171E;
   --bg-gradient: linear-gradient(180deg, #131D26 0%, #0B1117 100%);
@@ -80,15 +104,19 @@ html[data-theme="dark"] {
   --bg-reader-text: #16202A;
   --bg-header: rgba(26, 38, 50, 0.92);
   --text-main: #E6EDF3;
-  --text-secondary: #9FB1C1;
-  --text-muted: #6E8294;
+  --text-title: #F6EEDF;          /* мягкая песочно-молочная слоновая кость */
+  --text-author: #E2D5BE;         /* нежный песок */
+  --text-secondary: #C4B299;      /* охра в ночи */
+  --text-muted: #8C7C68;          /* дымчатый торф */
   --border-color: #2A3B4C;
   --border-strong: #3B5166;
   --accent-primary: #38A169;
   --accent-primary-hover: #2F855A;
   --accent-secondary: #E09F3E;
-  --accent-badge-bg: rgba(56, 161, 105, 0.18);
-  --accent-badge-text: #68D391;
+  --accent-badge-bg: rgba(245, 158, 11, 0.18);
+  --accent-badge-text: #FBBF24;
+  --hero-badge-bg: #D97706;
+  --hero-badge-text: #FFFFFF;
   --progress-track: #253545;
   --progress-fill: linear-gradient(90deg, #38A169 0%, #68D391 100%);
   --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -96,6 +124,14 @@ html[data-theme="dark"] {
   --scrollbar-thumb: #3B5166;
   --scrollbar-track: #131C24;
   --paywall-overlay: linear-gradient(180deg, rgba(22, 32, 42, 0.2) 0%, rgba(22, 32, 42, 0.96) 32%, #16202A 100%);
+
+  /* Цвета скаутских нашивок: Палитра «Ночной костёр в тайге» */
+  --badge-olive: #2A7A58;
+  --badge-amber: #F59E0B;
+  --badge-slate: #334155;
+  --badge-teal: #2DD4BF;
+  --badge-red: #F43F5E;
+  --badge-gold: #FBBF24;
 }
 
 /* ==========================================================================
@@ -184,7 +220,7 @@ html, body {
   font-family: 'Comfortaa', sans-serif;
   font-size: 0.98rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-title, var(--text-main));
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -250,6 +286,46 @@ html, body {
   opacity: 0.65;
 }
 
+/* SVG Иконки (Стиль «Скаутская нашивка со строчкой») */
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.14));
+}
+
+.btn-icon .svg-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.theme-chip .svg-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.collection-badge-icon .svg-icon {
+  width: 52px;
+  height: 52px;
+}
+
+.story-item-thumb-lock .svg-icon {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.5));
+}
+
+.meta-pill .svg-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.paywall-benefit-icon .svg-icon {
+  width: 18px;
+  height: 18px;
+}
+
 /* ==========================================================================
    4. ГЛАВНЫЙ ЭКРАН И ЭКРАН СБОРНИКА
    ========================================================================== */
@@ -306,8 +382,8 @@ html, body {
   display: inline-block;
   padding: 4px 12px;
   border-radius: 999px;
-  background: var(--accent-badge-bg);
-  color: var(--accent-badge-text);
+  background: var(--hero-badge-bg, var(--accent-badge-bg));
+  color: var(--hero-badge-text, var(--accent-badge-text));
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.03em;
@@ -318,7 +394,7 @@ html, body {
   font-family: 'Comfortaa', sans-serif;
   font-size: 1.45rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-title, var(--text-main));
   line-height: 1.25;
 }
 
@@ -398,13 +474,13 @@ html, body {
   font-family: 'Comfortaa', sans-serif;
   font-size: 1.22rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-title, var(--text-main));
   margin-bottom: 4px;
 }
 
 .collection-card-sub {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: var(--text-author, var(--text-secondary));
   line-height: 1.35;
 }
 
@@ -432,6 +508,16 @@ html, body {
 
 .btn-primary-action:active {
   transform: scale(0.98);
+}
+
+/* Компактная кнопка «Открыть →» в карточке сборника */
+.collection-card .btn-primary-action {
+  width: auto;
+  align-self: center;
+  padding: 10px 26px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 14px rgba(44, 90, 62, 0.22);
 }
 
 /* Список рассказов внутри сборника */
@@ -616,7 +702,7 @@ html, body {
 .story-item-author {
   font-size: 0.78rem;
   font-weight: 800;
-  color: var(--accent-secondary);
+  color: var(--text-author, var(--accent-secondary));
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
@@ -625,7 +711,7 @@ html, body {
   font-family: 'Comfortaa', sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-title, var(--text-main));
   line-height: 1.25;
 }
 
@@ -847,7 +933,7 @@ html, body {
   font-family: 'Comfortaa', sans-serif;
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--accent-secondary);
+  color: var(--text-title, var(--accent-secondary));
   margin-bottom: 10px;
 }
 
@@ -1084,7 +1170,7 @@ html, body {
   font-family: 'Comfortaa', sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text-title, var(--text-main));
   line-height: 1.25;
   margin-bottom: 4px;
 }

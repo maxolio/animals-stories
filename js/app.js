@@ -19,13 +19,14 @@ import {
   getAssetPath,
   downloadAndInstallPart
 } from './engine/contentDownloader.js';
+import { Icons } from './ui/icons.js';
 
 const ENABLE_PAYWALL = true;
 
 const THEMES = [
-  { id: 'forest', icon: '🌲', label: 'Лесная книга', metaColor: '#EAE0D0' },
-  { id: 'light',  icon: '☀️', label: 'Светлая',      metaColor: '#F1F5F9' },
-  { id: 'dark',   icon: '🌙', label: 'Тёмная',       metaColor: '#0F171E' }
+  { id: 'forest', icon: () => Icons.tree('', 26), label: 'Лесная книга', metaColor: '#EAE0D0' },
+  { id: 'light',  icon: () => Icons.sun('', 26),  label: 'Светлая',      metaColor: '#F1F5F9' },
+  { id: 'dark',   icon: () => Icons.moon('', 26), label: 'Тёмная',       metaColor: '#0F171E' }
 ];
 
 class App {
@@ -306,13 +307,14 @@ class App {
   renderHeaderControls() {
     const themeMeta = this.getThemeMeta();
     const soundOn = soundManager.speechEnabled;
+    const themeIconHtml = typeof themeMeta.icon === 'function' ? themeMeta.icon() : themeMeta.icon;
     return `
       <div class="header-controls">
         <button class="btn-icon" id="btnCycleTheme" title="Тема: ${themeMeta.label}">
-          ${themeMeta.icon}
+          ${themeIconHtml}
         </button>
         <button class="btn-icon ${soundOn ? '' : 'muted'}" id="btnToggleSound" title="${soundOn ? 'Озвучка включена (нажмите, чтобы читать в тишине)' : 'Озвучка выключена'}">
-          ${soundOn ? '🔊' : '🔇'}
+          ${soundOn ? Icons.soundOn('', 28) : Icons.soundOff('', 28)}
         </button>
       </div>
     `;
@@ -374,19 +376,22 @@ class App {
 
           <!-- Быстрое переключение 3 тем оформления -->
           <div class="theme-pill-bar" style="margin-top: 4px;">
-            ${THEMES.map(t => `
-              <button class="theme-chip ${this.currentTheme === t.id ? 'active' : ''}" data-set-theme="${t.id}">
-                <span>${t.icon}</span>
-                <span>${t.label}</span>
-              </button>
-            `).join('')}
+            ${THEMES.map(t => {
+              const iconHtml = typeof t.icon === 'function' ? t.icon() : t.icon;
+              return `
+                <button class="theme-chip ${this.currentTheme === t.id ? 'active' : ''}" data-set-theme="${t.id}">
+                  ${iconHtml}
+                  <span>${t.label}</span>
+                </button>
+              `;
+            }).join('')}
           </div>
         </section>
 
         <!-- Карточка Сборника №1 -->
         <section class="collection-card" id="cardOpenCollection1">
           <div class="collection-card-top">
-            <div class="collection-badge-icon">🐾</div>
+            <div class="collection-badge-icon">${Icons.paw('', 38)}</div>
             <div class="collection-card-info">
               <div class="collection-card-label">
                 <span class="collection-number-badge">${collection.number}</span>
@@ -398,7 +403,7 @@ class App {
 
           <button class="btn-primary-action" id="btnOpenCollection1">
             <span>Открыть</span>
-            <span>→</span>
+            ${Icons.arrowRight('', 18)}
           </button>
         </section>
       </main>
@@ -431,7 +436,7 @@ class App {
 
     this.appContainer.innerHTML = `
       <header class="header-bar">
-        <button class="btn-icon" id="btnBackHome" title="На главную">←</button>
+        <button class="btn-icon" id="btnBackHome" title="На главную">${Icons.arrowLeft('', 28)}</button>
         <div class="header-title-wrap">
           <div class="header-title">${collection.number}</div>
         </div>
@@ -445,7 +450,7 @@ class App {
             <div class="collection-promo-title">Откройте навсегда</div>
             <div class="collection-promo-subtitle">Разовая покупка без подписок и рекламы!</div>
             <button type="button" class="collection-promo-pill" id="btnHeroBuy" aria-label="Купить ${collection.number}">
-              <span>✨</span>
+              ${Icons.sparkle('', 16)}
               <span>${collection.number}</span>
               <span class="promo-new-price">${collection.price} ₽</span>
               <span class="promo-buy-word">Купить</span>
@@ -454,8 +459,8 @@ class App {
         ` : `
           <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px;">
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 2px 4px;">
-              <span style="font-size: 0.85rem; font-weight: 800; color: var(--accent-primary);">
-                ✨ Полный доступ открыт • Выберите рассказ:
+              <span style="font-size: 0.85rem; font-weight: 800; color: var(--accent-primary); display: flex; align-items: center; gap: 6px;">
+                ${Icons.sparkle('', 16)} Полный доступ открыт • Выберите рассказ:
               </span>
               <button id="btnResetDemoLock" style="background: none; border: none; color: var(--text-muted); font-size: 0.76rem; text-decoration: underline; cursor: pointer;">
                 Сбросить оплату (тест)
@@ -463,7 +468,8 @@ class App {
             </div>
             ${!isDownloaded ? `
               <button class="btn-primary-action" id="btnDownloadCollection" style="padding: 10px 14px; font-size: 0.86rem; border-radius: 12px; margin-bottom: 4px;">
-                <span>📥 Скачать платные истории сборника (14.4 МБ)</span>
+                ${Icons.download('', 18)}
+                <span>Скачать платные истории сборника (14.4 МБ)</span>
               </button>
             ` : ''}
           </div>
@@ -487,7 +493,7 @@ class App {
               >
                 <div class="story-item-thumb">
                   ${thumbMedia}
-                  ${isLocked ? `<div class="story-item-thumb-lock" aria-hidden="true">🔒</div>` : ''}
+                  ${isLocked ? `<div class="story-item-thumb-lock" aria-hidden="true">${Icons.lock('', 28)}</div>` : ''}
                 </div>
                 <div class="story-item-body">
                   <div class="story-item-author">${item.author}</div>
@@ -495,10 +501,10 @@ class App {
                   <p class="story-item-desc">${item.description}</p>
                   <div class="story-item-meta">
                     ${isLocked
-                      ? `<span class="meta-pill locked">🔒 Закрыто</span>`
+                      ? `<span class="meta-pill locked">${Icons.lock('', 14)} <span>Закрыто</span></span>`
                       : (!isUnlocked && item.isFree)
-                        ? `<span class="meta-pill free">🎁 Бесплатно</span>`
-                        : `<span class="meta-pill unlocked">✨ Открыто</span>`
+                        ? `<span class="meta-pill free">${Icons.gift('', 14)} <span>Бесплатно</span></span>`
+                        : `<span class="meta-pill unlocked">${Icons.sparkle('', 14)} <span>Открыто</span></span>`
                     }
                   </div>
                 </div>
@@ -627,7 +633,7 @@ class App {
     this.appContainer.innerHTML = `
       <!-- ШАПКА С ПОЛОСОЙ ПРОЧИТАННОГО И ОСТАВШЕГОСЯ ТЕКСТА -->
       <header class="header-bar">
-        <button class="btn-icon" id="btnBackToCollection" title="К списку рассказов">←</button>
+        <button class="btn-icon" id="btnBackToCollection" title="К списку рассказов">${Icons.arrowLeft('', 28)}</button>
         
         <div class="header-title-wrap">
           <div class="header-title-row">
@@ -657,18 +663,18 @@ class App {
         <!-- 3. Внизу две кнопки пролистывания страниц Вперёд и Назад -->
         <nav class="reader-nav-bar">
           <button class="btn-page-nav btn-prev" id="btnPrevPage" ${currentPageNum <= 1 ? 'disabled' : ''}>
-            <span>←</span>
+            ${Icons.arrowLeft('', 18)}
             <span>Назад</span>
           </button>
           ${isFirstPageNotStarted ? `
             <button class="btn-page-nav btn-next" id="btnStartStory">
               <span>Начать</span>
-              <span>▶</span>
+              ${Icons.play('', 18)}
             </button>
           ` : `
             <button class="btn-page-nav btn-next ${soundManager.speechEnabled ? 'btn-next--hidden' : ''}" id="btnNextPage">
-              <span>${currentPageNum >= totalPages ? 'В сборник ✓' : 'Вперёд'}</span>
-              <span>${currentPageNum >= totalPages ? '' : '→'}</span>
+              <span>${currentPageNum >= totalPages ? 'В сборник' : 'Вперёд'}</span>
+              ${currentPageNum >= totalPages ? Icons.checkCircle('', 18) : Icons.arrowRight('', 18)}
             </button>
           `}
         </nav>
@@ -826,9 +832,9 @@ class App {
     backdrop.className = 'modal-backdrop';
     backdrop.innerHTML = `
       <div class="modal-card" style="max-width: 440px;">
-        <button class="modal-close-btn" id="closePaywall" aria-label="Закрыть">✕</button>
+        <button class="modal-close-btn" id="closePaywall" aria-label="Закрыть">${Icons.close('', 16)}</button>
 
-        <div class="paywall-badge-pill">🌲 Коллекционное издание</div>
+        <div class="paywall-badge-pill">${Icons.tree('', 14)} Коллекционное издание</div>
         <div class="paywall-header-title">${collection.number}: «${collection.title}»</div>
         <p class="paywall-header-desc">
           Полный иллюстрированный сборник классических рассказов с мастер-озвучкой диктора
@@ -837,23 +843,23 @@ class App {
         <!-- Список преимуществ сборника -->
         <div class="paywall-benefits-box">
           <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">✓</span>
+            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
             <span>Все 12 глав драмы <strong>«Лобо — король Куррумпо»</strong></span>
           </div>
           <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">✓</span>
+            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
             <span>Студийная озвучка диктора (голос Iapetus, -16 LUFS)</span>
           </div>
           <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">✓</span>
+            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
             <span>21 акварельная HD-иллюстрация с живой сменой кадров</span>
           </div>
           <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">✓</span>
+            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
             <span>Все будущие рассказы и обновления Сборника №1</span>
           </div>
           <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">✓</span>
+            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
             <span>Работает офлайн • Без рекламы • Без подписок</span>
           </div>
         </div>
@@ -872,8 +878,8 @@ class App {
 
         <!-- Поле ввода E-mail для чека -->
         <div style="margin-bottom: 10px; text-align: left;">
-          <label style="display: block; font-size: 0.78rem; font-weight: 800; color: var(--text-secondary); margin-bottom: 4px;">
-            ✉️ Ваш E-mail (для чека и восстановления):
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 800; color: var(--text-secondary); margin-bottom: 4px;">
+            ${Icons.mail('', 15)} Ваш E-mail (для чека и восстановления):
           </label>
           <input
             type="email"
@@ -889,12 +895,14 @@ class App {
 
         <!-- Кнопка оплаты Robokassa -->
         <button class="btn-primary-action" id="btnPaySubmit" style="margin-bottom: 8px;">
-          <span id="payBtnLabel">💳 Открыть сборник за ${currentPrice} ₽</span>
+          ${Icons.card('', 20)}
+          <span id="payBtnLabel">Открыть сборник за ${currentPrice} ₽</span>
         </button>
 
         <!-- Кнопка проверки уже оплаченного заказа (СБП) -->
         <button class="btn-page-nav" id="btnCheckPendingPayment" style="width: 100%; font-size: 0.82rem; padding: 9px 12px; margin-bottom: 8px;">
-          <span id="btnCheckPendingLabel">🔄 Я уже оплатил — проверить статус</span>
+          ${Icons.refresh('', 16)}
+          <span id="btnCheckPendingLabel">Я уже оплатил — проверить статус</span>
         </button>
 
         <!-- Блок промокода (скрытый по умолчанию) -->
@@ -1137,8 +1145,10 @@ class App {
     backdrop.className = 'modal-backdrop';
     backdrop.innerHTML = `
       <div class="modal-card" style="max-width: 420px;">
-        <button class="modal-close-btn" id="closeRestoreModal" aria-label="Закрыть">✕</button>
-        <div class="parental-gate-title">✉️ Восстановление покупки</div>
+        <button class="modal-close-btn" id="closeRestoreModal" aria-label="Закрыть">${Icons.close('', 16)}</button>
+        <div class="parental-gate-title" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+          ${Icons.mail('', 20)} Восстановление покупки
+        </div>
         <p class="parental-gate-desc">
           Введите E-mail и номер заказа из чека Робокассы, который пришёл вам на почту:
         </p>
@@ -1163,7 +1173,8 @@ class App {
             style="width: 100%; padding: 11px 12px; border-radius: 12px; border: 1.5px solid var(--border-strong); background: var(--bg-reader-text); color: var(--text-main); font-size: 0.95rem; text-align: center; outline: none;"
           />
           <button type="submit" id="btnSubmitRestore" class="btn-primary-action">
-            <span>Восстановить доступ ✨</span>
+            ${Icons.sparkle('', 16)}
+            <span>Восстановить доступ</span>
           </button>
         </form>
 
@@ -1228,12 +1239,15 @@ class App {
     backdrop.className = 'modal-backdrop';
     backdrop.innerHTML = `
       <div class="modal-card">
-        <button class="modal-close-btn" id="closeSuccess" aria-label="Закрыть">✕</button>
-        <div style="font-size: 2.6rem; margin-bottom: 6px;">🎉</div>
+        <button class="modal-close-btn" id="closeSuccess" aria-label="Закрыть">${Icons.close('', 16)}</button>
+        <div style="margin-bottom: 10px; color: var(--accent-primary);">
+          ${Icons.sparkle('', 44)}
+        </div>
         <div class="parental-gate-title">${title}</div>
         <p class="parental-gate-desc" style="margin-bottom: 18px;">${message}</p>
         <button class="btn-primary-action" id="btnSuccessOk">
-          <span>К рассказам →</span>
+          <span>К рассказам</span>
+          ${Icons.arrowRight('', 18)}
         </button>
       </div>
     `;
@@ -1262,7 +1276,10 @@ class App {
     backdrop.className = 'modal-backdrop';
     backdrop.innerHTML = `
       <div class="modal-card" style="max-width: 420px; text-align: center;">
-        <div class="paywall-badge-pill">📥 Загрузка историй</div>
+        <div class="paywall-badge-pill" style="display: inline-flex; align-items: center; gap: 6px;">
+          ${Icons.download('', 15)}
+          <span>Загрузка историй</span>
+        </div>
         <div class="paywall-header-title" style="margin-top: 6px;">Сборник №1: «Зов дикой природы»</div>
         <p class="paywall-header-desc" id="dlStatusDesc" style="margin-bottom: 16px;">
           Загрузка платных рассказов и аудио диктора в высоком качестве (~14.4 МБ)...
