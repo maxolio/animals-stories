@@ -1,6 +1,6 @@
 {
   "name": "animals-interactive-stories",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Интерактивные рассказы о животных и дикой природе «Истории природы»",
   "author": "Maksim Kondratenko <teardbro@gmail.com>",
   "main": "index.html",

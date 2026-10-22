@@ -426,7 +426,7 @@ class App {
       <header class="header-bar">
         <button class="btn-icon" id="btnBackHome" title="На главную">←</button>
         <div class="header-title-wrap">
-          <div class="header-title">${collection.number}: ${collection.title}</div>
+          <div class="header-title">${collection.number}</div>
         </div>
         ${this.renderHeaderControls()}
       </header>
@@ -435,12 +435,11 @@ class App {
         <!-- Верхняя плашка покупки сборника (как sets-hero-header в kids-story-quest_1) -->
         ${!isUnlocked ? `
           <section class="collection-promo-header">
-            <div class="collection-promo-title">Откройте все истории навсегда</div>
+            <div class="collection-promo-title">Откройте навсегда</div>
             <div class="collection-promo-subtitle">Разовая покупка без подписок и рекламы!</div>
             <button type="button" class="collection-promo-pill" id="btnHeroBuy" aria-label="Купить ${collection.number}">
               <span>✨</span>
               <span>${collection.number}</span>
-              <span class="promo-old-price">${collection.oldPrice || 549} ₽</span>
               <span class="promo-new-price">${collection.price} ₽</span>
               <span class="promo-buy-word">Купить</span>
             </button>
@@ -488,13 +487,11 @@ class App {
                   <h3 class="story-item-title">${item.title}</h3>
                   <p class="story-item-desc">${item.description}</p>
                   <div class="story-item-meta">
-                    <span class="meta-pill">📄 ${item.pagesCount} стр.</span>
-                    <span class="meta-pill">⏱ ${item.readingTime}</span>
                     ${isLocked
                       ? `<span class="meta-pill locked">🔒 Закрыто</span>`
-                      : (item.isFree && !isUnlocked)
-                        ? `<span class="meta-pill">🎁 Бесплатно</span>`
-                        : `<span class="meta-pill">✨ Открыто</span>`
+                      : (!isUnlocked && item.isFree)
+                        ? `<span class="meta-pill free">🎁 Бесплатно</span>`
+                        : `<span class="meta-pill unlocked">✨ Открыто</span>`
                     }
                   </div>
                 </div>

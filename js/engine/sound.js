@@ -102,8 +102,8 @@ class SoundManager {
       const baseNow = this.ctx.currentTime;
       // Мягкое нисходящее минорное созвучие: F4 (349.23) -> D4 (293.66)
       const notes = [
-        { freq: 349.23, delay: 0.000, decay: 0.28, vol: 0.16 }, // F4
-        { freq: 293.66, delay: 0.090, decay: 0.36, vol: 0.14 }  // D4
+        { freq: 349.23, delay: 0.000, decay: 0.28, vol: 0.26 }, // F4
+        { freq: 293.66, delay: 0.090, decay: 0.36, vol: 0.22 }  // D4
       ];
 
       notes.forEach(n => {
