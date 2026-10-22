@@ -9,6 +9,7 @@ const AUDIO_BASE = 'assets/audio/stories/seton-lobo';
 export const LOBO_STORY = {
   id: 'seton-lobo',
   collectionId: 'animals_collection_1',
+  shortTitle: 'Лобо',
   title: 'Лобо — король Куррумпо',
   author: 'Эрнест Сетон-Томпсон',
   readingTime: '8 мин',

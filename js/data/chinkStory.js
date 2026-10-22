@@ -10,6 +10,7 @@ export const CHINK_STORY = {
   id: 'seton-chink',
   collectionId: 'animals_collection_1',
   title: 'Чинк — щенок из Йеллоустоуна',
+  shortTitle: 'Чинк',
   author: 'Эрнест Сетон-Томпсон',
   readingTime: '6 мин',
   isFree: true, // Первая история в сборнике — полностью бесплатная

@@ -622,10 +622,10 @@ class App {
         
         <div class="header-title-wrap">
           <div class="header-title-row">
-            <span class="header-title">${story.title}</span>
-            <span class="header-page-counter">${currentPageNum} / ${totalPages} (${progressPercent}%)</span>
+            <span class="header-title">${story.shortTitle || story.title}</span>
+            <span class="header-page-counter">${currentPageNum} / ${totalPages}</span>
           </div>
-          <div class="reading-progress-bar" title="Прочитано ${progressPercent}% рассказа">
+          <div class="reading-progress-bar" title="Страница ${currentPageNum} из ${totalPages}">
             <div class="reading-progress-fill" style="width: ${progressPercent}%;"></div>
           </div>
         </div>
@@ -638,10 +638,6 @@ class App {
         <!-- 1. Вверху картинка (с плавной однократной сменой слайдов по таймкоду) -->
         <div class="reader-illustration-box">
           ${slidesStageHtml}
-          <div class="reader-chapter-tag">${story.author}</div>
-          <div class="reader-audio-badge">
-            <span>${soundManager.speechEnabled ? '🎧 Озвучка вкл.' : '📖 Читаю сам'}</span>
-          </div>
         </div>
 
         <!-- 2. Фиксированное окно текста с внутренним скроллом -->
