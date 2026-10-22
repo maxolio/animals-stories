@@ -622,7 +622,7 @@ class App {
       ${pageData.paragraphs.map(p => `<p class="reader-paragraph">${p}</p>`).join('')}
     `;
 
-    const isFirstPageNotStarted = (currentPageNum === 1 && !this.storyStarted);
+    const isFirstPageNotStarted = (currentPageNum === 1 && !this.storyStarted && soundManager.speechEnabled);
 
     this.appContainer.innerHTML = `
       <!-- ШАПКА С ПОЛОСОЙ ПРОЧИТАННОГО И ОСТАВШЕГОСЯ ТЕКСТА -->
@@ -770,8 +770,9 @@ class App {
         btnToggleSound.title = isNowOn ? 'Озвучка включена' : 'Озвучка выключена';
       }
 
-      if (isFirstPageNotStarted) {
-        // До старта рассказа просто меняем режим звука
+      if (currentPageNum === 1 && !this.storyStarted) {
+        // До начала рассказа: при выключении звука (🔇) сразу появляется «Вперёд →», при включении (🔊) — «Начать ▶»
+        this.renderReaderScreen();
         return;
       }
 
