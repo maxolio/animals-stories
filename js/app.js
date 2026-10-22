@@ -24,9 +24,9 @@ import { Icons } from './ui/icons.js';
 const ENABLE_PAYWALL = true;
 
 const THEMES = [
-  { id: 'forest', icon: () => Icons.tree('', 26), label: 'Лесная книга', metaColor: '#EAE0D0' },
-  { id: 'light',  icon: () => Icons.sun('', 26),  label: 'Светлая',      metaColor: '#F1F5F9' },
-  { id: 'dark',   icon: () => Icons.moon('', 26), label: 'Тёмная',       metaColor: '#0F171E' }
+  { id: 'forest', icon: () => Icons.tree('', 34), label: 'Лесная',  metaColor: '#EAE0D0' },
+  { id: 'light',  icon: () => Icons.sun('', 34),  label: 'Светлая', metaColor: '#F1F5F9' },
+  { id: 'dark',   icon: () => Icons.moon('', 34), label: 'Тёмная',  metaColor: '#0F171E' }
 ];
 
 class App {
@@ -314,7 +314,7 @@ class App {
           ${themeIconHtml}
         </button>
         <button class="btn-icon ${soundOn ? '' : 'muted'}" id="btnToggleSound" title="${soundOn ? 'Озвучка включена (нажмите, чтобы читать в тишине)' : 'Озвучка выключена'}">
-          ${soundOn ? Icons.soundOn('', 28) : Icons.soundOff('', 28)}
+          ${soundOn ? Icons.soundOn('', 34) : Icons.soundOff('', 34)}
         </button>
       </div>
     `;
@@ -368,14 +368,11 @@ class App {
 
       <main class="screen-scrollable">
         <section class="hero-banner">
-          <div class="hero-banner-badge">Для детей и семейного чтения</div>
           <h1 class="hero-banner-title">Истории о природе и человеке</h1>
-          <p class="hero-banner-desc">
-            Великие рассказы о силе духа, преданности и неповторимом характере каждого зверя. Мы открываем детям подлинную красоту дикого мира и учим беречь жизнь во всех её проявлениях.
-          </p>
+          <p class="hero-banner-desc">Классические аудиорассказы для детей и всей семьи</p>
 
           <!-- Быстрое переключение 3 тем оформления -->
-          <div class="theme-pill-bar" style="margin-top: 4px;">
+          <div class="theme-pill-bar" style="margin-top: 2px;">
             ${THEMES.map(t => {
               const iconHtml = typeof t.icon === 'function' ? t.icon() : t.icon;
               return `
@@ -388,22 +385,24 @@ class App {
           </div>
         </section>
 
+        <!-- Разделитель каталога сборников -->
+        <div class="home-shelf-divider">
+          <span class="home-shelf-line"></span>
+          <span class="home-shelf-title">· Каталог сборников ·</span>
+          <span class="home-shelf-line"></span>
+        </div>
+
         <!-- Карточка Сборника №1 -->
         <section class="collection-card" id="cardOpenCollection1">
-          <div class="collection-card-top">
-            <div class="collection-badge-icon">${Icons.paw('', 38)}</div>
-            <div class="collection-card-info">
-              <div class="collection-card-label">
-                <span class="collection-number-badge">${collection.number}</span>
-              </div>
-              <div class="collection-card-title">${collection.title}</div>
-              <div class="collection-card-sub">${collection.subtitle}</div>
-            </div>
+          <div class="collection-card-label">
+            <div class="collection-badge-icon">${Icons.paw('', 32)}</div>
+            <span class="collection-number-badge">${collection.number}</span>
           </div>
+          <div class="collection-card-title">${collection.title}</div>
+          <div class="collection-card-sub">${collection.subtitle}</div>
 
           <button class="btn-primary-action" id="btnOpenCollection1">
-            <span>Открыть</span>
-            ${Icons.arrowRight('', 18)}
+            <span>Открыть →</span>
           </button>
         </section>
       </main>
@@ -436,7 +435,7 @@ class App {
 
     this.appContainer.innerHTML = `
       <header class="header-bar">
-        <button class="btn-icon" id="btnBackHome" title="На главную">${Icons.arrowLeft('', 28)}</button>
+        <button class="btn-icon" id="btnBackHome" title="На главную">${Icons.arrowLeft('', 34)}</button>
         <div class="header-title-wrap">
           <div class="header-title">${collection.number}</div>
         </div>
@@ -472,6 +471,13 @@ class App {
             ` : ''}
           </div>
         `}
+
+        <!-- Разделитель списка рассказов сборника -->
+        <div class="shelf-divider">
+          <span class="shelf-line"></span>
+          <span class="shelf-title">· Рассказы сборника ·</span>
+          <span class="shelf-line"></span>
+        </div>
 
         <div class="stories-list">
           ${collection.stories.map(item => {
@@ -631,7 +637,7 @@ class App {
     this.appContainer.innerHTML = `
       <!-- ШАПКА С ПОЛОСОЙ ПРОЧИТАННОГО И ОСТАВШЕГОСЯ ТЕКСТА -->
       <header class="header-bar">
-        <button class="btn-icon" id="btnBackToCollection" title="К списку рассказов">${Icons.arrowLeft('', 28)}</button>
+        <button class="btn-icon" id="btnBackToCollection" title="К списку рассказов">${Icons.arrowLeft('', 34)}</button>
         
         <div class="header-title-wrap">
           <div class="header-title-row">
