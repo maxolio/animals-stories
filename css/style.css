@@ -117,6 +117,20 @@ html, body {
   background: var(--bg-gradient);
   color: var(--text-main);
   transition: background 0.25s ease, color 0.25s ease;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Профессиональное скрытие полос прокрутки для нативного вида приложения */
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 #app-container {
@@ -126,9 +140,9 @@ html, body {
   display: flex;
   flex-direction: column;
   padding-top: calc(10px + env(safe-area-inset-top, 0px));
-  padding-right: calc(14px + env(safe-area-inset-right, 0px));
+  padding-right: calc(10px + env(safe-area-inset-right, 0px));
   padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-  padding-left: calc(14px + env(safe-area-inset-left, 0px));
+  padding-left: calc(10px + env(safe-area-inset-left, 0px));
   gap: 10px;
   position: relative;
 }
@@ -243,21 +257,20 @@ html, body {
 .screen-scrollable {
   flex: 1;
   overflow-y: auto;
-  padding-right: 2px;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-right: 0;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
 .screen-scrollable::-webkit-scrollbar {
-  width: 6px;
-}
-.screen-scrollable::-webkit-scrollbar-track {
-  background: transparent;
-}
-.screen-scrollable::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 999px;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .hero-banner {
@@ -803,6 +816,11 @@ html, body {
   padding: 18px 18px;
   box-shadow: var(--shadow-card);
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-y: contain;
   position: relative;
   line-height: 1.68;
   font-size: 1.08rem;
@@ -810,16 +828,9 @@ html, body {
 }
 
 .reader-text-window::-webkit-scrollbar {
-  width: 7px;
-}
-.reader-text-window::-webkit-scrollbar-track {
-  background: var(--scrollbar-track);
-  border-radius: 999px;
-  margin: 8px 0;
-}
-.reader-text-window::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 999px;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .reader-page-heading {
