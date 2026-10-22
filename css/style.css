@@ -934,6 +934,20 @@ html, body {
   flex-shrink: 0;
 }
 
+/* Эргономичный отступ под пальцы на смартфонах (Natural Thumb Zone) */
+@media (orientation: portrait) {
+  .reader-nav-bar {
+    margin-bottom: clamp(12px, 2.5vh, 18px);
+  }
+}
+
+@media (orientation: landscape) {
+  .reader-nav-bar {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
 .btn-page-nav {
   padding: 13px 16px;
   border-radius: 16px;
