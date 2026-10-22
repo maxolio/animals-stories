@@ -832,42 +832,11 @@ class App {
       <div class="modal-card" style="max-width: 440px;">
         <button class="modal-close-btn" id="closePaywall" aria-label="Закрыть">${Icons.close('', 16)}</button>
 
-        <div class="paywall-badge-pill">${Icons.tree('', 14)} Коллекционное издание</div>
-        <div class="paywall-header-title">${collection.number}: «${collection.title}»</div>
-        <p class="paywall-header-desc">
-          Полный иллюстрированный сборник классических рассказов с мастер-озвучкой диктора
-        </p>
-
-        <!-- Список преимуществ сборника -->
-        <div class="paywall-benefits-box">
-          <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
-            <span>Все 12 глав драмы <strong>«Лобо — король Куррумпо»</strong></span>
-          </div>
-          <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
-            <span>Студийная озвучка диктора (голос Iapetus, -16 LUFS)</span>
-          </div>
-          <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
-            <span>21 акварельная HD-иллюстрация с живой сменой кадров</span>
-          </div>
-          <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
-            <span>Все будущие рассказы и обновления Сборника №1</span>
-          </div>
-          <div class="paywall-benefit-item">
-            <span class="paywall-benefit-icon">${Icons.check('', 16)}</span>
-            <span>Работает офлайн • Без рекламы • Без подписок</span>
-          </div>
-        </div>
+        <div class="paywall-header-title" style="margin-top: 4px; margin-bottom: 12px;">Купить ${collection.number}</div>
 
         <div class="paywall-tariff-card">
-          <div style="font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: var(--accent-primary); letter-spacing: 0.04em;">
-            ПОЛНЫЙ ДОСТУП НАВСЕГДА
-          </div>
           <div class="paywall-price" id="paywallDisplayPrice">
-            <span style="text-decoration: line-through; font-size: 1.15rem; opacity: 0.55; margin-right: 8px;">549 ₽</span>${currentPrice} ₽
+            ${currentPrice} ₽
           </div>
           <div id="paywallTariffDesc" style="font-size: 0.82rem; color: var(--text-secondary);">
             Один платёж навсегда • Доступ ко всем историям сборника
@@ -894,7 +863,7 @@ class App {
         <!-- Кнопка оплаты Robokassa -->
         <button class="btn-primary-action" id="btnPaySubmit" style="margin-bottom: 8px;">
           ${Icons.card('', 20)}
-          <span id="payBtnLabel">Открыть сборник за ${currentPrice} ₽</span>
+          <span id="payBtnLabel">Купить сборник за ${currentPrice} ₽</span>
         </button>
 
         <!-- Кнопка проверки уже оплаченного заказа (СБП) -->
@@ -919,15 +888,14 @@ class App {
           <div id="promoMessage" style="display: none; font-size: 0.78rem; font-weight: 800; margin-top: 5px;"></div>
         </div>
 
-        <!-- Ссылки: Промокод и Восстановить покупку -->
-        <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 6px; flex-wrap: wrap;">
-          <a href="#" id="btnTogglePromo" style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 700; text-decoration: underline;">
+        <!-- Кнопки: Промокод и Восстановить покупку в стиле бейджа-капсулы -->
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+          <button type="button" class="collection-number-badge" id="btnTogglePromo" style="cursor: pointer; font-family: inherit; margin-left: 0;">
             У меня есть промокод
-          </a>
-          <span style="color: var(--text-muted); font-size: 0.8rem;">•</span>
-          <a href="#" id="btnRestorePurchase" style="color: var(--accent-primary); font-size: 0.8rem; font-weight: 800; text-decoration: underline;">
+          </button>
+          <button type="button" class="collection-number-badge" id="btnRestorePurchase" style="cursor: pointer; font-family: inherit; margin-left: 0;">
             Восстановить покупку
-          </a>
+          </button>
         </div>
 
         <!-- Тестовая разблокировка для проверки -->
@@ -997,8 +965,8 @@ class App {
     });
 
     const PROMOCODES = {
-      'KOTIK': { price: 299, desc: '🔥 Спец-цена по промокоду: 299 ₽', btnText: '💳 Оплатить 299 ₽ (Скидка 100 ₽)' },
-      'TEST1234': { price: 11, desc: '⚙️ Тестовый платёж: 11 ₽', btnText: '💳 Оплатить 11 ₽ (Тест)' }
+      'KOTIK': { price: 299, desc: '🔥 Спец-цена по промокоду: 299 ₽', btnText: 'Купить сборник за 299 ₽' },
+      'TEST1234': { price: 11, desc: '⚙️ Тестовый платёж: 11 ₽', btnText: 'Купить сборник за 11 ₽' }
     };
 
     const applyPromo = () => {
