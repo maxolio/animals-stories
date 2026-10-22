@@ -459,9 +459,7 @@ class App {
         ` : `
           <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px;">
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 2px 4px;">
-              <span style="font-size: 0.85rem; font-weight: 800; color: var(--accent-primary); display: flex; align-items: center; gap: 6px;">
-                ${Icons.sparkle('', 16)} Полный доступ открыт • Выберите рассказ:
-              </span>
+              <span class="collection-number-badge">${collection.number} открыт</span>
               <button id="btnResetDemoLock" style="background: none; border: none; color: var(--text-muted); font-size: 0.76rem; text-decoration: underline; cursor: pointer;">
                 Сбросить оплату (тест)
               </button>

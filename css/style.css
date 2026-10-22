@@ -460,7 +460,6 @@ html, body {
 .collection-number-badge {
   display: inline-flex;
   align-items: center;
-  margin-left: 25px;
   padding: 4px 12px;
   border-radius: 999px;
   border: 1.5px solid var(--accent-primary);
@@ -469,6 +468,10 @@ html, body {
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.02em;
+}
+
+.collection-card .collection-number-badge {
+  margin-left: 25px;
 }
 
 .collection-card-title {
