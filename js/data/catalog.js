@@ -7,7 +7,7 @@ export const COLLECTIONS_DATA = [
   {
     id: 'animals_collection_1',
     number: 'Сборник №1',
-    title: 'Зов дикой природы',
+    title: 'О верности и дружбе',
     subtitle: 'Классические иллюстрированные рассказы о животных с профессиональной озвучкой',
     price: 399,
     oldPrice: 549,

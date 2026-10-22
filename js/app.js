@@ -352,17 +352,17 @@ class App {
     this.appContainer.innerHTML = `
       <header class="header-bar">
         <div class="header-title-wrap">
-          <div class="header-title">🐺 Живые Истории</div>
+          <div class="header-title">Аудио Истории</div>
         </div>
         ${this.renderHeaderControls()}
       </header>
 
       <main class="screen-scrollable">
         <section class="hero-banner">
-          <div class="hero-banner-badge">Семейное чтение и аудиокнига</div>
-          <h1 class="hero-banner-title">Рассказы о животных и дикой природе</h1>
+          <div class="hero-banner-badge">Для детей и семейного чтения</div>
+          <h1 class="hero-banner-title">Истории о природе и человеке</h1>
           <p class="hero-banner-desc">
-            Иллюстрированные истории классиков с бережной студийной озвучкой. Слушайте с диктором или отключите звук в шапке, чтобы читать самостоятельно.
+            Великие рассказы о силе духа, преданности и неповторимом характере каждого зверя. Мы открываем детям подлинную красоту дикого мира и учим беречь жизнь во всех её проявлениях.
           </p>
 
           <!-- Быстрое переключение 3 тем оформления -->
@@ -382,7 +382,7 @@ class App {
             <div class="collection-badge-icon">🐾</div>
             <div class="collection-card-info">
               <div class="collection-card-label">
-                ${collection.number} • ${isUnlocked ? '✨ Все истории открыты' : `${totalStories} истории • 1 бесплатно`}
+                <span class="collection-number-badge">${collection.number}</span>
               </div>
               <div class="collection-card-title">${collection.title}</div>
               <div class="collection-card-sub">${collection.subtitle}</div>
@@ -390,7 +390,7 @@ class App {
           </div>
 
           <button class="btn-primary-action" id="btnOpenCollection1">
-            <span>📖 Открыть ${collection.number}</span>
+            <span>Открыть</span>
             <span>→</span>
           </button>
         </section>

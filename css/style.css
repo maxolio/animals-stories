@@ -363,12 +363,22 @@ html, body {
 }
 
 .collection-card-label {
-  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.collection-number-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--accent-primary);
+  background: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+  font-size: 0.8rem;
   font-weight: 800;
-  color: var(--accent-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 3px;
+  letter-spacing: 0.02em;
 }
 
 .collection-card-title {
