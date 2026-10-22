@@ -7,6 +7,9 @@ class SoundManager {
     this.speechEnabled = this.loadSpeechPref();
     this.currentAudio = null;
     this.currentPlayId = 0;
+    if (typeof window !== 'undefined') {
+      window.soundManager = this;
+    }
 
     if (typeof document !== 'undefined') {
       document.addEventListener('visibilitychange', () => {

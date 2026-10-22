@@ -948,9 +948,17 @@ html, body {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
   color: #FFFFFF;
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, border-color 0.2s ease;
 }
 
-.btn-page-nav.btn-next:hover:not(:disabled) {
+.btn-page-nav.btn-next.btn-next--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.94);
+}
+
+.btn-page-nav.btn-next:hover:not(:disabled):not(.btn-next--hidden) {
   background: var(--accent-primary-hover);
 }
 

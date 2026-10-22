@@ -651,13 +651,21 @@ class App {
             <span>←</span>
             <span>Назад</span>
           </button>
-          <button class="btn-page-nav btn-next" id="btnNextPage">
+          <button class="btn-page-nav btn-next ${soundManager.speechEnabled ? 'btn-next--hidden' : ''}" id="btnNextPage">
             <span>${currentPageNum >= totalPages ? 'В сборник ✓' : 'Вперёд'}</span>
             <span>${currentPageNum >= totalPages ? '' : '→'}</span>
           </button>
         </nav>
       </main>
     `;
+
+    // Функция плавного появления кнопки «Вперёд» после окончания озвучки или при 🔇
+    const btnNext = document.getElementById('btnNextPage');
+    const revealNextButton = () => {
+      if (btnNext && btnNext.classList.contains('btn-next--hidden')) {
+        btnNext.classList.remove('btn-next--hidden');
+      }
+    };
 
     // Функция переключения активного слайда
     const setActiveSlide = (targetIdx) => {
@@ -707,7 +715,10 @@ class App {
       soundManager.playVoice(
         getAssetPath(pageData.audio),
         fullPageSpeech,
-        null,
+        () => {
+          // Озвучка завершилась — кнопка «Вперёд» появляется
+          revealNextButton();
+        },
         (currentTimeSec) => {
           for (let i = slides.length - 1; i > this.currentSlideIndex; i--) {
             if (currentTimeSec >= (slides[i].at || 0)) {
@@ -722,10 +733,25 @@ class App {
       );
     } else {
       startFallbackSlideTimers();
+      revealNextButton();
     }
 
-    this.bindHeaderControls(() => {
-      this.renderReaderScreen();
+    this.bindHeaderControls((isNowOn) => {
+      if (isNowOn) {
+        // Звук включили — перезапускаем ридер с озвучкой
+        this.renderReaderScreen();
+      } else {
+        // Звук выключили (🔇) — останавливаем голос и сразу показываем кнопку «Вперёд»
+        soundManager.stopVoice();
+        revealNextButton();
+        startFallbackSlideTimers();
+        const btnToggleSound = document.getElementById('btnToggleSound');
+        if (btnToggleSound) {
+          btnToggleSound.classList.add('muted');
+          btnToggleSound.textContent = '🔇';
+          btnToggleSound.title = 'Озвучка выключена';
+        }
+      }
     });
 
     document.getElementById('btnBackToCollection')?.addEventListener('click', () => {
