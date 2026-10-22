@@ -58,6 +58,7 @@ class App {
 
     this.slideTimers = [];
     this.currentSlideIndex = 0;
+    this.storyStarted = false;
     this._toastTimer = null;
     this._isVerifyingPayment = false;
 
@@ -291,7 +292,13 @@ class App {
     soundManager.stopVoice();
     this.state.screen = screen;
     if (params.selectedCollectionId !== undefined) this.state.selectedCollectionId = params.selectedCollectionId;
-    if (params.selectedStoryId !== undefined) this.state.selectedStoryId = params.selectedStoryId;
+    if (params.selectedStoryId !== undefined) {
+      this.state.selectedStoryId = params.selectedStoryId;
+      this.storyStarted = false;
+    }
+    if (screen === 'COLLECTION' || screen === 'HOME') {
+      this.storyStarted = false;
+    }
     if (params.currentPage !== undefined) this.state.currentPage = params.currentPage;
     this.render();
   }
@@ -615,6 +622,8 @@ class App {
       ${pageData.paragraphs.map(p => `<p class="reader-paragraph">${p}</p>`).join('')}
     `;
 
+    const isFirstPageNotStarted = (currentPageNum === 1 && !this.storyStarted);
+
     this.appContainer.innerHTML = `
       <!-- ШАПКА С ПОЛОСОЙ ПРОЧИТАННОГО И ОСТАВШЕГОСЯ ТЕКСТА -->
       <header class="header-bar">
@@ -651,10 +660,17 @@ class App {
             <span>←</span>
             <span>Назад</span>
           </button>
-          <button class="btn-page-nav btn-next ${soundManager.speechEnabled ? 'btn-next--hidden' : ''}" id="btnNextPage">
-            <span>${currentPageNum >= totalPages ? 'В сборник ✓' : 'Вперёд'}</span>
-            <span>${currentPageNum >= totalPages ? '' : '→'}</span>
-          </button>
+          ${isFirstPageNotStarted ? `
+            <button class="btn-page-nav btn-next" id="btnStartStory">
+              <span>Начать</span>
+              <span>▶</span>
+            </button>
+          ` : `
+            <button class="btn-page-nav btn-next ${soundManager.speechEnabled ? 'btn-next--hidden' : ''}" id="btnNextPage">
+              <span>${currentPageNum >= totalPages ? 'В сборник ✓' : 'Вперёд'}</span>
+              <span>${currentPageNum >= totalPages ? '' : '→'}</span>
+            </button>
+          `}
         </nav>
       </main>
     `;
@@ -709,34 +725,56 @@ class App {
       });
     };
 
-    // Запускаем озвучку страницы и синхронизируем смену картинок с началом аудио (или таймером при 🔇)
-    const fullPageSpeech = pageData.paragraphs.join(' ');
-    if (soundManager.speechEnabled) {
-      soundManager.playVoice(
-        getAssetPath(pageData.audio),
-        fullPageSpeech,
-        () => {
-          // Озвучка завершилась — кнопка «Вперёд» появляется
-          revealNextButton();
-        },
-        (currentTimeSec) => {
-          for (let i = slides.length - 1; i > this.currentSlideIndex; i--) {
-            if (currentTimeSec >= (slides[i].at || 0)) {
-              setActiveSlide(i);
-              break;
-            }
-          }
-        },
-        () => {
-          startFallbackSlideTimers();
-        }
-      );
+    // Логика запуска рассказа и озвучки страницы
+    if (isFirstPageNotStarted) {
+      // Рассказ ещё не начат: ждём клика по кнопке «Начать ▶»
+      document.getElementById('btnStartStory')?.addEventListener('click', () => {
+        soundManager.playMenuTap();
+        this.storyStarted = true;
+        this.renderReaderScreen();
+      });
     } else {
-      startFallbackSlideTimers();
-      revealNextButton();
+      // Рассказ уже идёт: запускаем озвучку и синхронизируем смену картинок
+      const fullPageSpeech = pageData.paragraphs.join(' ');
+      if (soundManager.speechEnabled) {
+        soundManager.playVoice(
+          getAssetPath(pageData.audio),
+          fullPageSpeech,
+          () => {
+            // Озвучка завершилась — кнопка «Вперёд» появляется
+            revealNextButton();
+          },
+          (currentTimeSec) => {
+            for (let i = slides.length - 1; i > this.currentSlideIndex; i--) {
+              if (currentTimeSec >= (slides[i].at || 0)) {
+                setActiveSlide(i);
+                break;
+              }
+            }
+          },
+          () => {
+            startFallbackSlideTimers();
+          }
+        );
+      } else {
+        startFallbackSlideTimers();
+        revealNextButton();
+      }
     }
 
     this.bindHeaderControls((isNowOn) => {
+      const btnToggleSound = document.getElementById('btnToggleSound');
+      if (btnToggleSound) {
+        btnToggleSound.classList.toggle('muted', !isNowOn);
+        btnToggleSound.textContent = isNowOn ? '🔊' : '🔇';
+        btnToggleSound.title = isNowOn ? 'Озвучка включена' : 'Озвучка выключена';
+      }
+
+      if (isFirstPageNotStarted) {
+        // До старта рассказа просто меняем режим звука
+        return;
+      }
+
       if (isNowOn) {
         // Звук включили — перезапускаем ридер с озвучкой
         this.renderReaderScreen();
@@ -745,17 +783,12 @@ class App {
         soundManager.stopVoice();
         revealNextButton();
         startFallbackSlideTimers();
-        const btnToggleSound = document.getElementById('btnToggleSound');
-        if (btnToggleSound) {
-          btnToggleSound.classList.add('muted');
-          btnToggleSound.textContent = '🔇';
-          btnToggleSound.title = 'Озвучка выключена';
-        }
       }
     });
 
     document.getElementById('btnBackToCollection')?.addEventListener('click', () => {
       soundManager.playMenuTap();
+      this.storyStarted = false;
       this.navigate('COLLECTION');
     });
 
@@ -774,6 +807,7 @@ class App {
         this.navigate('READER', { currentPage: currentPageNum + 1 });
       } else {
         soundManager.playMenuTap();
+        this.storyStarted = false;
         this.navigate('COLLECTION');
       }
     });
